@@ -6,7 +6,7 @@ The model weights, dataset, model parameters, monthly and yearly distribution of
 
 
 
-## Download Script
+## Download Scripts
 
 ### IASI
 
@@ -107,6 +107,24 @@ key: xxxxxxxxxx
 ## Training Codes
 
 
+
+
+
+## Gridding Codes
+
+The Level2 outputs are gridded into Level3 files with `harp` library, first install the `harp` library and use the code of `grid_iasi_model.py`. The sifting codes are as below:
+
+```python
+operations = ";".join([
+        f"cld>=1;cld<={cf};uncertainty<=4E16;uncertainty>=0;CO<=10E18;CO>=-2E18;surfT>260",
+        f"keep(latitude_bounds,longitude_bounds,{gas},cld, uncertainty, surfT)",
+        "bin_spatial({},{},{},{},{},{})".format(lat_length, lat_0, resolution, lon_length, lon_0, resolution),
+        "derive(latitude {latitude})",
+        "derive(longitude {longitude})",
+    ])
+```
+
+You can change the resolution with `resol` and sifting conditions in the gridding code. The code will process the  files in `pathL2` and output in `pathOut`. 
 
 
 

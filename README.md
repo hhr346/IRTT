@@ -130,7 +130,7 @@ You can change the resolution with `resol` and sifting conditions in the griddin
 
 ## Comparing Codes
 
-
+The comparison between the model outputs or product files and the ground-based observations (TCCON and NDACC) are `compare_tccon_npz.py` and `compare_ndacc_npz.py`. The codes will output an `npz` file for each site with key information.
 
 
 

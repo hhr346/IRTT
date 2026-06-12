@@ -106,7 +106,7 @@ key: xxxxxxxxxx
 
 ## Training Codes
 
-
+The evaluation code is shown in the `eval.py`, and it uses the trained model weights to do inference on the orbits. The training pipeline will be open sourced upon accepting. 
 
 
 

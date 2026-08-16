@@ -1,8 +1,8 @@
 # README
 
-Instructions for the codes and materials of IRTT paper.
+Instructions for the codes and materials of IRTT paper *Transformer-based Inverse Radiance Transfer Framework for Global Carbon Monoxide Retrieval Using Metop-B/IASI*.
 
-The model weights, dataset, model parameters, monthly and yearly distribution of this study are openly available in Zenodo at https://doi.org/10.5281/zenodo.20647547.
+The dataset, monthly and yearly distribution of this study are openly available in Zenodo at https://doi.org/10.5281/zenodo.20647547 （without surface temperature） and https://doi.org/10.5281/zenodo.21961015 (with surface temperature）
 
 
 
@@ -104,9 +104,37 @@ key: xxxxxxxxxx
 
 
 
-## Training Codes
+## IRTT pipeline
 
-The evaluation code is shown in the `eval.py`, and it uses the trained model weights to do inference on the orbits. The training pipeline will be open sourced upon accepting. 
+The whole pipeline is realized in the `modeling` file folder. First switch into the `modeling` by `cd modeling`, and then `python xx.py` after set up the proper environment. 
+
+`1_extractDataset.py` extracts some points from the orbits randomly. 
+
+`2_sum_sift_split.py` summarizes all the points and then split the observation points by the surface temperature.
+
+`3_simulateOnce.py` calls the RTTOV python wrapper to simulate spectrum under various circumstances. 
+
+> Install and set up RTTOV first, details in [RTTOV Downloads | NWP SAF](https://nwp-saf.eumetsat.int/site/software/rttov/download/) 
+
+`4_calLabel.py` calculates the columns from profiles. 
+
+`5_sumDataset.py` generates the final dataset. 
+
+
+
+Finally, the training code is shown in `train_p.py` and  `train_temp_noise.py` (with or without surface temperature), they will train the trained models with different parameters to tune and generate `*.pth` and `*.npz` files in `model_path` file folder.
+
+`6_extractOrbit.py` extracts inputs for the trained model from all the orbits that need to be retrieved. 
+
+The evaluation code is shown in the `eval.py`, and it uses the trained model weights to do inference on the orbits. You can change the used model by switching the variable `suffix` and the `import ...` should also be changed respectively. 
+
+```python
+from train_p import EncoderRegressor, apply_normalizer
+suffix = '_final_p_300'
+
+from train_temp_noise import EncoderRegressor, apply_normalizer
+suffix = '_final_t_300'
+```
 
 
 
@@ -126,11 +154,12 @@ operations = ";".join([
 
 You can change the resolution with `resol` and sifting conditions in the gridding code. The code will process the  files in `pathL2` and output in `pathOut`. 
 
+The gridding code file for the official products is `grid_iasi_product.py`. Most of the codes are the same with `grid_iasi_model.py`.
+
 
 
 ## Comparing Codes
 
 The comparison between the model outputs or product files and the ground-based observations (TCCON and NDACC) are `compare_tccon_npz.py` and `compare_ndacc_npz.py`. The codes will output an `npz` file for each site with key information.
-
 
 

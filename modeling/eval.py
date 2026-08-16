@@ -8,10 +8,8 @@ import glob
 import numpy as np
 import datetime
 import torch
-from Tools import btd_config
-import torch.nn as nn
-import torch.nn.functional as F
-from paper_train_final_p import EncoderRegressor, apply_normalizer
+from train_p import EncoderRegressor, apply_normalizer
+# from train_temp_noise import EncoderRegressor, apply_normalizer
 import gc
 gc.collect()  # 强制垃圾回收
 
@@ -115,6 +113,7 @@ dropout = 0.1
 weight_decay = 1e-2
 eval_batch_size = 2 ** 11
 suffix = '_final_p_300'
+# suffix = '_final_t_300'
 gas_name = 'CO'
 
 begin = datetime.date(2022, 1, 1)

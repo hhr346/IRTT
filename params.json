@@ -8,15 +8,10 @@
     "date_begin": "2022-01-01",
     "date_end": "2022-12-31",
 
-    "vapor_peak": [2145.5], 
-    "vapor_valley": [2153.5],
-
     "gas_id": "0",
     "0": {
         "name": "CO",
         "range": [2143, 2181],
-        "peak": [2158.25],
-        "valley": [2153.5]
     },
     "ref_out": "../ref_data/"
 }

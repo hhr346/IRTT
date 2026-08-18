@@ -22,11 +22,6 @@ class irtt_config:
         start_idx = np.where(wavenumber == self.wave_num_s)[0][0]
         end_idx = np.where(wavenumber == self.wave_num_e)[0][0] + 1
         self.wavenumber = wavenumber[start_idx:end_idx]
-        self.peak = params[params["gas_id"]]["peak"]
-        self.valley = params[params["gas_id"]]["valley"]
-
-        self.vapor_peak = params["vapor_peak"]
-        self.vapor_valley = params["vapor_valley"]
 
         window = np.array([self.wave_num_s, self.wave_num_e])
         chan_window = (window-645)*4 + 1 
